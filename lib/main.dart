@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './screens/homepage/homepage.dart';
+import 'screens/showall/showalldetails.dart';
 void main() {
   runApp(MyApp());
 }
@@ -14,6 +15,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      routes: {
+        ShowAllDeatils.routeName : (context)=>ShowAllDeatils()
+      },
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
