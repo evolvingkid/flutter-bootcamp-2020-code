@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:trailapp/models/homeDataModels.dart';
 import 'package:trailapp/screens/homepage/widgets/Product.dart';
 import 'package:trailapp/screens/showall/showalldetails.dart';
-import 'package:trailapp/servies/demo.dart';
 import 'package:trailapp/theme/theme.dart';
 import 'widgets/customAppbar.dart';
 
 class HomePage extends StatelessWidget {
   void onPressedEvent(BuildContext context) {
-   Navigator.of(context).pushNamed(ShowAllDeatils.routeName);
-   
+    Navigator.of(context).pushNamed(ShowAllDeatils.routeName);
   }
+
+  List<HomeDataModel> houseData = [
+    HomeDataModel(
+      houseName: 'this is house name',
+      bathrom: 2,
+      bedroom: 4,
+      description: 'hqdiq iwudhqwudqhw dhqw dhqw',
+      price: 222,
+    ),
+    HomeDataModel(
+      houseName: 'this is house name',
+      bathrom: 2,
+      bedroom: 4,
+      description: 'hqdiq iwudhqwudqhw dhqw dhqw',
+      price: 223,
+    ),
+     HomeDataModel(
+      houseName: 'this is house name',
+      bathrom: 2,
+      bedroom: 4,
+      description: 'hqdiq iwudhqwudqhw dhqw dhqw',
+      price: 223,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: floationactionbtncustom(),
       body: SafeArea(
@@ -27,36 +49,30 @@ class HomePage extends StatelessWidget {
               Text("City", style: greySmall),
               titlbar(),
               priceTagList(context),
-              ListView(
+              ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                         Navigator.of(context).pushNamed(ShowAllDeatils.routeName);
+                itemCount: houseData.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Map argumnets = {
+                        'housename': houseData[index].houseName,
+                        'price': houseData[index].price
+                      };
 
+                      Navigator.of(context).pushNamed(ShowAllDeatils.routeName,
+                          arguments: argumnets);
                     },
                     child: Product(
                       imgpath: 'assets/img/home.jpg',
                       place: "Jogan, Xyz palace",
-                      price: "\$2000.00",
+                      price: houseData[0].price.toString(),
                       specs: "4 bedroom / 2 bathroom",
                     ),
-                  ),
-                  Product(
-                    imgpath: 'assets/img/home2.jpg',
-                    place: "Jogan, Xyz palace",
-                    price: "\$2000.00",
-                    specs: "4 bedroom / 2 bathroom",
-                  ),
-                  Product(
-                    imgpath: 'assets/img/home.jpg',
-                    place: "Jogan, Xyz palace",
-                    price: "\$2000.00",
-                    specs: "4 bedroom / 2 bathroom",
-                  ),
-                ],
-              )
+                  );
+                },
+              ),
             ],
           ),
         ),
