@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:trailapp/screens/form/formpage.dart';
 import './screens/homepage/homepage.dart';
 import 'screens/showall/showalldetails.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -16,12 +18,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
-        ShowAllDeatils.routeName : (context)=>ShowAllDeatils()
+        ShowAllDeatils.routeName: (context) => ShowAllDeatils(),
+        FormPage.routeName: (context) => FormPage(),
       },
       debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
 }
-
-

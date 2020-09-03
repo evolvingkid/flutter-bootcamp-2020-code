@@ -6,7 +6,6 @@ class ShowAllDeatils extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map argu = ModalRoute.of(context).settings.arguments;
-    print(argu);
     return Scaffold(
         body: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
+  Function ontap;
+  CustomAppBar({
+    this.ontap,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical:20),
+      padding: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomIconBtn(customIcon: Icons.menu,),
-          CustomIconBtn(customIcon: Icons.search,),
+          GestureDetector(
+              onTap: ontap,
+              child: CustomIconBtn(
+                customIcon: Icons.menu,
+              )),
+          CustomIconBtn(
+            customIcon: Icons.search,
+          ),
         ],
       ),
     );
@@ -17,7 +28,6 @@ class CustomAppBar extends StatelessWidget {
 }
 
 class CustomIconBtn extends StatelessWidget {
-
   IconData customIcon;
 
   CustomIconBtn({@required this.customIcon});

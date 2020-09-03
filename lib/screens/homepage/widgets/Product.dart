@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:trailapp/theme/theme.dart';
 
@@ -46,20 +45,40 @@ class Product extends StatelessWidget {
             ],
           ),
         ),
-        
         Positioned(
           right: 20,
           top: 40,
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.favorite_border,
-            ),
-          ),
+          child: FavoriteBtn(),
         ),
       ],
+    );
+  }
+}
+
+class FavoriteBtn extends StatefulWidget {
+  @override
+  _FavoriteBtnState createState() => _FavoriteBtnState();
+}
+
+class _FavoriteBtnState extends State<FavoriteBtn> {
+  bool _isfaviorite = true;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      padding: EdgeInsets.all(8),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            _isfaviorite = !_isfaviorite;
+          });
+        },
+        child: Icon(
+          _isfaviorite ? Icons.favorite : Icons.favorite_border,
+          color: _isfaviorite ? Colors.red : Colors.black,
+        ),
+      ),
     );
   }
 }

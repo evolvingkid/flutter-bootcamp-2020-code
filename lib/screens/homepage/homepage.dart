@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:trailapp/models/homeDataModels.dart';
+import 'package:trailapp/screens/form/formpage.dart';
 import 'package:trailapp/screens/homepage/widgets/Product.dart';
 import 'package:trailapp/screens/showall/showalldetails.dart';
 import 'package:trailapp/theme/theme.dart';
 import 'widgets/customAppbar.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   void onPressedEvent(BuildContext context) {
     Navigator.of(context).pushNamed(ShowAllDeatils.routeName);
   }
+
+  final GlobalKey _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<HomeDataModel> houseData = [
     HomeDataModel(
@@ -25,7 +33,7 @@ class HomePage extends StatelessWidget {
       description: 'hqdiq iwudhqwudqhw dhqw dhqw',
       price: 223,
     ),
-     HomeDataModel(
+    HomeDataModel(
       houseName: 'this is house name',
       bathrom: 2,
       bedroom: 4,
@@ -37,15 +45,34 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: floationactionbtncustom(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('form'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(FormPage.routeName);
+              },
+            ),
+          ],
+        ),
+      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomAppBar(),
+              CustomAppBar(
+                ontap: () {
+                  
+                },
+              ),
               Text("City", style: greySmall),
               titlbar(),
               priceTagList(context),

@@ -4,10 +4,11 @@ class HomeDataModel {
   int bedroom;
   int bathrom;
   String description;
-  HomeDataModel(
-      {this.houseName,
-      this.bathrom,
-      this.bedroom,
-      this.description,
-      this.price});
+  HomeDataModel({
+    this.houseName,
+    this.bathrom,
+    this.bedroom,
+    this.description,
+    this.price,
+  });
 }
