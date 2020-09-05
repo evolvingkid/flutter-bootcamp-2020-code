@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pushNamed(ShowAllDeatils.routeName);
   }
 
-  final GlobalKey _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   List<HomeDataModel> houseData = [
     HomeDataModel(
@@ -61,7 +61,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20),
@@ -70,7 +69,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               CustomAppBar(
                 ontap: () {
-                  
+                  _scaffoldKey.currentState.openDrawer();
                 },
               ),
               Text("City", style: greySmall),

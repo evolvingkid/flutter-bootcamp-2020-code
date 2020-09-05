@@ -1,16 +1,46 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import '../../config/globalvar.dart' as config;
 
-class FormPage extends StatelessWidget {
+class FormPage extends StatefulWidget {
   static const routeName = '/formpage';
+
+  @override
+  _FormPageState createState() => _FormPageState();
+}
+
+class _FormPageState extends State<FormPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  bool _isLoading = false;
+
   Map formData = {
-    'housename': null,
-    'price': null,
-    'bedroom': null,
-    'bathroom': null,
+    'housetitle': null,
+    'numbOfBedRoom': null,
+    'imageURL': null,
     'description': null
   };
+
+  Future<void> sendDataToServer() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+      final _encodeData = json.encode(formData);
+      final _fetchData = await http.post('${config.baseUrl}house',
+          body: _encodeData, headers: {"Content-type": "application/json"});
+
+
+  
+      print(_fetchData.body);
+
+    
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,34 +54,28 @@ class FormPage extends StatelessWidget {
                   key: _formKey,
                   child: Column(
                     children: [
-                      CustomTextFeild(
-                        hintText: 'this',
-                        color: Colors.red,
-                        validator: (val){
-                          
-                        },
-                      ),
-                      CustomTextFeild(
-                        hintText: 'that',
-                        onSaved: (val) {
-                          print('object');
-                        },
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            hintText: 'Home Title',
+                          ),
+                          onSaved: (val) {
+                            formData['housetitle'] = val;
+                          },
+                          onChanged: (val) {},
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                            hintText: 'Price',
+                            hintText: 'Image Url',
                           ),
                           onSaved: (val) {
-                            formData['price'] = val;
-                          },
-                          validator: (val) {
-                           if( val.length > 10 ){
-                             return 'this ss';
-                           }
-                           return null;
+                            formData['imageURL'] = val;
                           },
                           onChanged: (val) {},
                         ),
@@ -67,19 +91,7 @@ class FormPage extends StatelessWidget {
                             hintText: 'No of bedroom',
                           ),
                           onSaved: (val) {
-                            formData['bedroom'] = val;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            hintText: 'no of bathroom',
-                          ),
-                          onSaved: (val) {
-                            formData['bathroom'] = val;
+                            formData['numbOfBedRoom'] = int.parse(val);
                           },
                         ),
                       ),
@@ -96,19 +108,18 @@ class FormPage extends StatelessWidget {
                           },
                         ),
                       ),
-                      RaisedButton(
-                        color: Colors.red,
-                        textColor: Colors.white,
-                        onPressed: () {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          }
-
-                          _formKey.currentState.save();
-                          print(formData);
-                        },
-                        child: Text('Continue'),
-                      ),
+                      _isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : RaisedButton(
+                              color: Colors.red,
+                              textColor: Colors.white,
+                              onPressed: () {
+                                _formKey.currentState.save();
+                                print(formData);
+                                sendDataToServer();
+                              },
+                              child: Text('Continue'),
+                            ),
                     ],
                   ))
             ],
